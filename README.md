@@ -7,3 +7,5 @@ a video I tend to do exactly how it's done in it. Try a lot of customisation for
 Maybe trying to use the vue wrapper of three js too ?
 Will probably host all of the exercises on a website at some point
 Every lesson has it's own folder, every folder will have a NOTES.md file with my notes for the lesson
+
+Turns out I let this hang for another year, I guess we're doing it again ?
