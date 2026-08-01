@@ -5,6 +5,9 @@ set -eu
 
 mkdir -p /out
 
+# "01,02 05" -> " 01 02 05 ", so a plain substring test can match whole entries
+EXCLUDED=" $(echo "${EXCLUDE_DIRS:-}" | tr ',;' '  ' | tr -s ' ') "
+
 for dir in [0-9][0-9]*; do
     [ -d "$dir" ] || continue
 
@@ -12,6 +15,13 @@ for dir in [0-9][0-9]*; do
         echo ">> skipping $dir (no package.json)"
         continue
     fi
+
+    case "$EXCLUDED" in
+        *" $dir "*)
+            echo ">> skipping $dir (in EXCLUDE_DIRS)"
+            continue
+            ;;
+    esac
 
     echo ">> building $dir"
 

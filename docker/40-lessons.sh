@@ -6,14 +6,14 @@ ROOT=/usr/share/nginx/html
 EXCLUDE_DIRS="${EXCLUDE_DIRS:-}"
 SITE_TITLE="${SITE_TITLE:-Three.js Journey}"
 
-# "01,02 05" -> drop 01, 02 and 05
+# "01,02 05" -> drop 01, 02 and 05. Usually a no-op: when EXCLUDE_DIRS is a
+# Coolify build variable these were never built in the first place. This is the
+# fallback for when it is only set at runtime.
 for excluded in $(echo "$EXCLUDE_DIRS" | tr ',;' '  '); do
     [ -n "$excluded" ] || continue
     if [ -d "$ROOT/$excluded" ]; then
         echo ">> excluding lesson $excluded"
         rm -rf "${ROOT:?}/$excluded"
-    else
-        echo ">> EXCLUDE_DIRS mentions '$excluded' but there is no such lesson"
     fi
 done
 
@@ -61,4 +61,8 @@ HEAD
 FOOT
 } > "$ROOT/index.html"
 
-echo ">> serving: $(ls -d "$ROOT"/[0-9][0-9]* 2>/dev/null | xargs -r -n1 basename | tr '\n' ' ')"
+served=""
+for dir in "$ROOT"/[0-9][0-9]*; do
+    [ -d "$dir" ] && served="$served $(basename "$dir")"
+done
+echo ">> serving:$served"
