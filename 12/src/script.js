@@ -3,14 +3,19 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import typefaceFont from 'three/examples/fonts/helvetiker_regular.typeface.json'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+import { Pane } from 'tweakpane'
 import GUI from 'lil-gui'
+import { gsap } from "gsap";
 
 /**
  * Base
  */
 // Debug
-const gui = new GUI()
-const debugObject = { matcap: 2, }
+const pane = new Pane({ title: 'Debug window' });
+const debugObject = {
+    matcap: 2,
+    text: '// STUDIO [1N]',
+}
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -43,11 +48,14 @@ const fontLoader = new FontLoader()
 
 const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture3 })
 
+let text;
+let textGeometry;
+
 fontLoader.load(
     '/fonts/Satoshi_Variable_Bold.json',
     (font) =>
     {
-        const textGeometry = new TextGeometry(
+        textGeometry = new TextGeometry(
             '// STUDIO [1N]',
             {
                 font: font,
@@ -63,37 +71,112 @@ fontLoader.load(
         )
 
         textGeometry.computeBoundingBox()
-        console.log(textGeometry.boundingBox)
-
         textGeometry.center()
 
-        const text = new THREE.Mesh(textGeometry, textMaterial)
-        gui.add(debugObject, 'matcap', [0, 1, 2, 3, 4, 5, 6])
-            .onChange((val) => {
-                textMaterial.matcap = matcaps[val]
+        text = new THREE.Mesh(textGeometry, textMaterial)
+
+        text.scale.set(1, 1, 0)
+        text.visible = false
+
+        /**
+         * Matcap change
+         */
+        pane.addBinding(debugObject, 'matcap', {
+            options: {
+                0: 0,
+                1: 1,
+                2: 2,
+                3: 3,
+                4: 4,
+                5: 5,
+                6: 6,
+            }
+        }).on('change', ({ value }) => {
+            textMaterial.matcap = matcaps[value]
+        })
+
+        /**
+         * Text change
+         */
+        pane.addBinding(debugObject, 'text')
+            .on('change', ({ value }) => {
+                textGeometry.dispose()
+                scene.remove(text)
+
+                textGeometry = new TextGeometry(
+                    value,
+                    {
+                        font: font,
+                        size: 0.5,
+                        depth: 0.1,
+                        curveSegments: 5,
+                        bevelEnabled: true,
+                        bevelThickness: 0.03,
+                        bevelSize: 0.02,
+                        bevelOffset: 0,
+                        bevelSegments: 2
+                    }
+                )
+
+                textGeometry.computeBoundingBox()
+                textGeometry.center()
+
+                text = new THREE.Mesh(textGeometry, textMaterial)
+
+
+                scene.add(text)
             })
+
         scene.add(text)
     }
 )
 
-const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45)
+const donutGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2)
 
-for (let i = 0; i < 100; i++) {
-    const donut = new THREE.Mesh(donutGeometry, textMaterial)
-    scene.add(donut)
 
-    donut.position.x = (Math.random() - 0.5) * 10
-    donut.position.y = (Math.random() - 0.5) * 10
-    donut.position.z = (Math.random() - 0.5) * 10
+for (let i = 0; i < 300; i++) {
+    const cube = new THREE.Mesh(donutGeometry, textMaterial)
+    scene.add(cube)
 
-    donut.rotation.set(
+    gsap.to(cube.position, {
+      x: (Math.random() - 0.5) * 15,
+      y: (Math.random() - 0.5) * 15,
+      z: (Math.random() - 0.5) * 15,
+      ease: 'expo.out',
+      duration: 0.3,
+      delay: 2,
+      onComplete: () => {
+        text.visible = true
+
+        gsap.to(text.scale, { x: 1, y: 1, z: 1})
+
+        gsap.to(cube.rotation, {
+            x: Math.random() * Math.PI,
+            y: Math.random() * Math.PI,
+            z: Math.random() * Math.PI,
+            yoyo: true,
+            duration: 10 * Math.random() + 5,
+            repeat: -1
+        })
+      }
+    })
+
+    cube.rotation.set(
         Math.random() * Math.PI,
         Math.random() * Math.PI,
-        Math.random() * Math.PI, // since a donut is symmetric we don't really need random z
+        Math.random() * Math.PI,
     )
 
-    const scale = Math.random()
-    donut.scale.set(scale, scale, scale)
+    gsap.to(cube.rotation, {
+        x: Math.random() * Math.PI,
+        y: Math.random() * Math.PI,
+        z: Math.random() * Math.PI,
+        yoyo: true,
+        duration: 3 * Math.random()
+    })
+
+    const scale = Math.random() * 3
+    cube.scale.set(scale, scale, scale)
 }
 
 

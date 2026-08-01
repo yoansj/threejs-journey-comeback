@@ -1,0 +1,28 @@
+# Traefik dynamic configuration for the *VPS* proxy (not the raspi).
+#
+# The domain resolves to the VPS, but the container runs on the raspi, which is
+# only reachable over Tailscale. This makes the VPS terminate TLS and forward
+# the request to the raspi's own Traefik, which then routes it to nginx.
+#
+# Where it goes: Coolify UI -> your VPS server -> Proxy -> Dynamic
+# Configurations -> Add, filename "threejs.yaml".
+# (On disk that is /data/coolify/proxy/dynamic/threejs.yaml.)
+#
+# Written as single-line flow YAML on purpose: the Coolify editor auto-indents
+# pasted text and breaks block YAML. One line has no significant indentation,
+# so it survives both pasting and hand-typing. Comments are optional, only the
+# last line matters. Traefik hot-reloads it; the raspi needs no redeploy.
+#
+# Replace 100.x.y.z with the raspi's Tailscale IP (see the Tailscale admin
+# panel); port 80 is its Coolify Traefik. The Host header is preserved, so that
+# Traefik matches its own router for threejs.studio1n.fr and hands off to the
+# nginx container.
+#
+# The real IP is deliberately not committed: this repo is public, and there is
+# no reason to publish internal addressing. It is not a secret either, though —
+# 100.64.0.0/10 is Tailscale's CGNAT range and is unroutable from the internet.
+
+# Router a = https (TLS terminated here), router b = http, redirected to https
+# by middleware r. Short names keep the line typable in the Coolify editor.
+
+http: {routers: {a: {rule: "Host(`threejs.studio1n.fr`)", entryPoints: [https], service: s, tls: {certResolver: letsencrypt}}, b: {rule: "Host(`threejs.studio1n.fr`)", entryPoints: [http], service: s, middlewares: [r]}}, services: {s: {loadBalancer: {servers: [{url: "http://100.x.y.z:80"}]}}}, middlewares: {r: {redirectScheme: {scheme: https, permanent: true}}}}

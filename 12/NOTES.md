@@ -32,4 +32,7 @@ pretty much standard stuff but you gotta think about it
 we can even use the text material since it's the same as the donuts, i guess it's a cheap and effective way to save
 fps
 
-it's pettry much done but i'll work on it again
+it's pretty much done but i'll work on it again
+
+edit: went back again and added a cool reveal animation
+text can be edited, cubes rotate and "explode" upon start
