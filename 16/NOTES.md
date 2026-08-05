@@ -34,3 +34,24 @@ For the fade bruno says he generated the alphaMap using figma and gives a link t
 
 https://brunosimon.notion.site/Assets-953f65558015455eb65d38a7a5db7171
 
+we added a whole lot of textures
+I choose different ones from bruno cause I felt like it
+Now it's time to add the ghosts
+I pretty much remeber this part of the lesson with the sin and cos
+I'll do one like that and then i'll move the two others in a semi random and fun way using gsap
+
+I also wanna add text on the tombs that would be funny
+
+I remember the fog part but I don't remember hearing about FogExp that seems new and cool !
+
+Last part of the lesson is optimizing the textures but i kinda already know how that works since it's image optimization
+i don't want to be spending too much time on this lesson and on most of the lessons in general so i'll be doing a little 
+more fun stuff and then going to the next one
+my goal is pretty much to do all the lessons, with a focus on the added lessons since last time, shaders and r3f
+even though i already used r3f before, hopefully i also catch up the lesson at the right time
+for the next update
+
+anyways
+I added the blinking light
+My ghosts are pretty funky, I might add some small models like trees and such
+I wanna do the tombstone text thing too
