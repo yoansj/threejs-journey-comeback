@@ -1,0 +1,76 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    overflow: hidden;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+:root {
+  /* backgrounds are semi transparent so the galaxy shows through the panel,
+     foregrounds are brighter than the default theme to stay readable on top of it */
+  --tp-base-background-color: hsla(0, 0%, 0%, 0.35);
+  --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
+  --tp-button-background-color: hsla(0, 0%, 100%, 0.55);
+  --tp-button-background-color-active: hsla(0, 0%, 100%, 0.85);
+  --tp-button-background-color-focus: hsla(0, 0%, 100%, 0.75);
+  --tp-button-background-color-hover: hsla(0, 0%, 100%, 0.65);
+  --tp-button-foreground-color: hsla(0, 0%, 0%, 1.00);
+  --tp-container-background-color: hsla(0, 0%, 100%, 0.07);
+  --tp-container-background-color-active: hsla(0, 0%, 100%, 0.20);
+  --tp-container-background-color-focus: hsla(0, 0%, 100%, 0.15);
+  --tp-container-background-color-hover: hsla(0, 0%, 100%, 0.11);
+  --tp-container-foreground-color: hsla(0, 0%, 85%, 1.00);
+  --tp-groove-foreground-color: hsla(0, 0%, 100%, 0.10);
+  --tp-input-background-color: hsla(0, 0%, 0%, 0.35);
+  --tp-input-background-color-active: hsla(0, 0%, 0%, 0.60);
+  --tp-input-background-color-focus: hsla(0, 0%, 0%, 0.50);
+  --tp-input-background-color-hover: hsla(0, 0%, 0%, 0.45);
+  --tp-input-foreground-color: hsla(0, 0%, 95%, 1.00);
+  --tp-label-foreground-color: hsla(0, 0%, 80%, 1.00);
+  --tp-monitor-background-color: hsla(0, 0%, 0%, 0.35);
+  --tp-monitor-foreground-color: hsla(0, 0%, 85%, 1.00);
+}
+
+/* tweakpane pins its panel to the top right by default,
+   this moves it to the bottom center instead */
+.tp-dfwv {
+    top: initial !important;
+    right: initial !important;
+    bottom: 16px !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    /* ~36% of the screen, but never silly-narrow or silly-wide */
+    width: clamp(320px, 36vw, 700px) !important;
+}
+
+/* .tp-rotv is the whole pane, blurring what's behind it keeps the
+   semi transparent controls readable over a busy galaxy */
+.tp-rotv {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* .tp-rotv_b is the title bar, kept opaque so the galaxy name always reads
+   clearly, and so the pane still looks solid when it is collapsed */
+.tp-rotv_b {
+    background-color: hsla(0, 0%, 0%, 0.9) !important;
+    font-size: 20px !important;
+    line-height: 1.8 !important;
+    height: auto !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: hsla(0, 0%, 100%, 1) !important;
+}
