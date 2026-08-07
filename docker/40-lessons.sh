@@ -17,49 +17,24 @@ for excluded in $(echo "$EXCLUDE_DIRS" | tr ',;' '  '); do
     fi
 done
 
-# Placeholder homepage: whatever lessons are left, newest first.
+# What the homepage fetches: the card metadata written per lesson at build time,
+# for whatever survived above, newest first.
 {
-    cat <<HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>$SITE_TITLE</title>
-<style>
-:root { color-scheme: dark light; }
-body { margin:0; padding:3rem 1.5rem; font:16px/1.6 system-ui,sans-serif;
-       background:#111; color:#eee; display:flex; justify-content:center; }
-main { width:100%; max-width:34rem; }
-h1 { font-size:1.4rem; font-weight:600; margin:0 0 1.5rem; }
-ul { list-style:none; margin:0; padding:0; }
-a { display:flex; gap:1rem; padding:.7rem .9rem; border-radius:.5rem;
-    color:inherit; text-decoration:none; }
-a:hover { background:#ffffff14; }
-b { font-variant-numeric:tabular-nums; color:#888; font-weight:500; }
-</style>
-</head>
-<body>
-<main>
-<h1>$SITE_TITLE</h1>
-<ul>
-HEAD
+    printf '['
+    separator=""
+    for name in $(for dir in "$ROOT"/[0-9][0-9]*; do
+                      [ -d "$dir" ] && basename "$dir"
+                  done | sort -r); do
+        [ -f "$ROOT/$name/lesson.json" ] || continue
+        printf '%s' "$separator"
+        tr -d '\n' < "$ROOT/$name/lesson.json"
+        separator=","
+    done
+    printf ']'
+} > "$ROOT/lessons.json"
 
-    for dir in "$ROOT"/[0-9][0-9]*; do
-        [ -d "$dir" ] || continue
-        name=$(basename "$dir")
-        title=$(sed -n 's:.*<title>\(.*\)</title>.*:\1:p' "$dir/index.html" 2>/dev/null | head -n1)
-        [ -n "$title" ] || title="Lesson $name"
-        printf '<li><a href="/%s/"><b>%s</b><span>%s</span></a></li>\n' "$name" "$name" "$title"
-    done | sort -r
-
-    cat <<'FOOT'
-</ul>
-</main>
-</body>
-</html>
-FOOT
-} > "$ROOT/index.html"
+# The homepage ships with its own title; SITE_TITLE still gets the last word.
+sed -i "s|>Three\.js Journey<|>$SITE_TITLE<|g" "$ROOT/index.html"
 
 served=""
 for dir in "$ROOT"/[0-9][0-9]*; do

@@ -2,3 +2,5 @@
 **/node_modules
 **/dist
 **/*.md
+# ...except the lesson notes, whose first heading is the homepage card title.
+!**/NOTES.md

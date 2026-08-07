@@ -1,0 +1,251 @@
+:root
+{
+    color-scheme: dark;
+    --bg: #000000;
+    --text: #ffffff;
+    --muted: #999999;
+    --line: #ffffff;
+    --faint: #1a1a1a;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace;
+}
+
+*
+{
+    box-sizing: border-box;
+    border-radius: 0;
+}
+
+body
+{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 var(--mono);
+}
+
+.header
+{
+    padding: 4rem 1.5rem 2rem;
+    max-width: 86rem;
+    margin: 0 auto;
+}
+
+.header h1
+{
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.header p
+{
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+}
+
+.header a
+{
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--line);
+    color: var(--text);
+    text-decoration: none;
+}
+
+.header a:hover,
+.header a:focus-visible
+{
+    background: var(--text);
+    color: var(--bg);
+}
+
+/* One column on phones, two in between, three once there is room for them. */
+.grid
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 0 1.5rem 4rem;
+    max-width: 86rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 48rem)
+{
+    .grid
+    {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 68rem)
+{
+    .grid
+    {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    overflow: hidden;
+}
+
+/* Thumbnail + hint, and the click target that swaps them for the iframe. */
+.card__preview
+{
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.card__image
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* No thumbnail: fall back to the lesson number, big and quiet. */
+.card__fallback
+{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--faint);
+}
+
+.card__hint
+{
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 0.45rem 0.75rem;
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.card__preview:hover .card__hint,
+.card__preview:focus-visible .card__hint
+{
+    background: var(--text);
+    color: var(--bg);
+}
+
+.card__preview:focus-visible
+{
+    outline: 2px solid var(--line);
+    outline-offset: -2px;
+}
+
+/* The lesson itself, in place of the thumbnail. */
+.card__frame
+{
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+}
+
+.card__stop
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-left: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.card__stop:hover
+{
+    background: var(--text);
+    color: var(--bg);
+}
+
+.card__body
+{
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    padding: 0.55rem 0.55rem 0.55rem 0.75rem;
+}
+
+.card__number
+{
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.card__title
+{
+    margin-right: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Straight to the lesson's own URL, in a new tab. */
+.card__open
+{
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.card__open:hover,
+.card__open:focus-visible
+{
+    background: var(--text);
+    color: var(--bg);
+}
+
+.empty
+{
+    grid-column: 1 / -1;
+    color: var(--muted);
+    padding: 2rem 0;
+}
