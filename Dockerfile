@@ -12,7 +12,12 @@ ARG EXCLUDE_DIRS=""
 WORKDIR /app
 COPY . .
 
+# /lesson-cache holds the finished build of every lesson, keyed by folder
+# contents: unchanged lessons are copied out of it instead of being rebuilt, so
+# adding one lesson costs one build instead of all of them. Losing it (docker
+# builder prune, new machine) costs a single full rebuild, nothing more.
 RUN --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,target=/lesson-cache \
     EXCLUDE_DIRS="$EXCLUDE_DIRS" sh docker/build-lessons.sh
 
 # ---- Serve them all from a single nginx ----

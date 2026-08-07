@@ -6,6 +6,44 @@ set -eu
 
 mkdir -p /out
 
+# Finished builds, keyed by the contents of the folder they came from. Lives on
+# a BuildKit cache mount (see the Dockerfile), so it survives between builds and
+# an unchanged lesson is copied out instead of being installed and rebuilt.
+# Pruning the builder cache only costs one full rebuild.
+CACHE="${LESSON_CACHE:-/lesson-cache}"
+mkdir -p "$CACHE"
+
+# Every key carries the hash of this script: changing how lessons are built has
+# to invalidate every lesson, or the cache would keep serving the old output.
+SCRIPT_HASH=$(sha256sum "$0" | cut -d' ' -f1)
+
+# Content hash of a project folder. Sorted by path so it does not depend on the
+# order find walks the tree, and blind to timestamps so a fresh git clone (which
+# is what the deployment builds from) still hits the cache.
+project_hash() {
+    printf '%s %s' "$SCRIPT_HASH" "$(
+        find "$1" \( -name node_modules -o -name dist \) -prune -o -type f -exec sha256sum {} + |
+            sort -k2 |
+            sha256sum
+    )" | sha256sum | cut -d' ' -f1
+}
+
+# Copies a cached build into place, if there is one for that exact content.
+cache_restore() {
+    [ -d "$CACHE/$1/$2" ] || return 1
+
+    mkdir -p "$3"
+    cp -r "$CACHE/$1/$2/." "$3/"
+}
+
+# Stores what was just built, and drops the entries of previous contents of the
+# same project so the cache tracks the repository instead of growing forever.
+cache_store() {
+    rm -rf "$CACHE/$1"
+    mkdir -p "$CACHE/$1/$2"
+    cp -r "$3/." "$CACHE/$1/$2/"
+}
+
 # Run from inside a project folder: reproducible install when there is a
 # lockfile, plain install when there is not.
 install_deps() {
@@ -46,6 +84,14 @@ for dir in [0-9][0-9]*; do
             ;;
     esac
 
+    # Hashed before the rewriting below, so the key reflects the repository.
+    hash=$(project_hash "$dir")
+
+    if cache_restore "$dir" "$hash" "/out/$dir"; then
+        echo ">> reusing cached build of $dir"
+        continue
+    fi
+
     echo ">> building $dir"
 
     # Vite rewrites asset URLs it can see (HTML, imports) using --base, but not
@@ -81,11 +127,21 @@ for dir in [0-9][0-9]*; do
     fi
     printf '{"id":"%s","title":"%s","thumbnail":%s}\n' \
         "$dir" "$json_title" "$json_thumbnail" > "/out/$dir/lesson.json"
+
+    # The whole /out/<NN>, so a cache hit needs no post-processing at all.
+    cache_store "$dir" "$hash" "/out/$dir"
 done
 
 # ---- Homepage, served at / ----
-echo ">> building homepage"
-(cd homepage && install_deps && npx vite build --base /)
-cp -r homepage/dist/. /out/
+hash=$(project_hash homepage)
+
+if cache_restore homepage "$hash" /out; then
+    echo ">> reusing cached build of homepage"
+else
+    echo ">> building homepage"
+    (cd homepage && install_deps && npx vite build --base /)
+    cp -r homepage/dist/. /out/
+    cache_store homepage "$hash" homepage/dist
+fi
 
 ls -1 /out
