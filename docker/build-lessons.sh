@@ -6,12 +6,23 @@ set -eu
 
 mkdir -p /out
 
+# Run from inside a project folder: reproducible install when there is a
+# lockfile, plain install when there is not.
+install_deps() {
+    if [ -f package-lock.json ]; then
+        npm ci
+    else
+        echo ">> no package-lock.json, falling back to npm install"
+        npm install --no-audit --no-fund
+    fi
+}
+
 # Title shown on the homepage card: first "# heading" of the lesson NOTES.md,
 # minus its leading lesson number ("# 18 - Galaxy Generator" -> "Galaxy
 # Generator"). Falls back to the <title> of the lesson, then to "Lesson NN".
 lesson_title() {
-    title=$(sed -n 's/^#[[:space:]]\+//p' "$1/NOTES.md" 2>/dev/null | head -n1 |
-            sed -E 's/^[0-9]+[[:space:]]*[-–—:.][[:space:]]*//')
+    title=$(sed -n 's/^#[[:space:]][[:space:]]*//p' "$1/NOTES.md" 2>/dev/null | head -n1 |
+            sed 's/^[0-9][0-9]*[[:space:]]*[-:.][[:space:]]*//')
     [ -n "$title" ] || title=$(sed -n 's:.*<title>\(.*\)</title>.*:\1:p' "$1/src/index.html" 2>/dev/null | head -n1)
     [ -n "$title" ] || title="Lesson $1"
     printf '%s' "$title"
@@ -44,7 +55,9 @@ for dir in [0-9][0-9]*; do
     find "$dir/src" -name '*.js' -type f -exec \
         sed -i -E "s#(['\"\`])/(textures|fonts|models|sounds|images|draco|audio)/#\1./\2/#g" {} +
 
-    (cd "$dir" && npm ci && npx vite build --base "/$dir/")
+    # npm ci needs a lockfile and hard-fails without one, which would take the
+    # whole deployment down over a lesson that was committed without it.
+    (cd "$dir" && install_deps && npx vite build --base "/$dir/")
 
     mkdir -p "/out/$dir"
     cp -r "$dir/dist/." "/out/$dir/"
@@ -72,7 +85,7 @@ done
 
 # ---- Homepage, served at / ----
 echo ">> building homepage"
-(cd homepage && npm ci && npx vite build --base /)
+(cd homepage && install_deps && npx vite build --base /)
 cp -r homepage/dist/. /out/
 
 ls -1 /out
