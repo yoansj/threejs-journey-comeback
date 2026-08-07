@@ -39,6 +39,9 @@ colorTexture.colorSpace = THREE.SRGBColorSpace
 
 // colorTexture.minFilter = THREE.NearestFilter
 colorTexture.magFilter = THREE.NearestFilter
+// rotation pivots around center, which defaults to the (0, 0) corner and would swing
+// every uv outside the texture, so move it to the middle first
+colorTexture.center.set(0.5, 0.5)
 colorTexture.rotation = Math.PI
 
 const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')

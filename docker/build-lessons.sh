@@ -130,6 +130,13 @@ for dir in [0-9][0-9]*; do
 
     # The whole /out/<NN>, so a cache hit needs no post-processing at all.
     cache_store "$dir" "$hash" "/out/$dir"
+
+    # The output is safely in /out and in the cache, so the ~60MB of
+    # node_modules has done its job. Kept, they would pile up in this layer for
+    # the entire build (half a gigabyte at nine lessons, and growing with every
+    # lesson added) on a machine that has to hold the image alongside them.
+    # The npm cache mount makes reinstalling cheap anyway.
+    rm -rf "$dir/node_modules" "$dir/dist"
 done
 
 # ---- Homepage, served at / ----
@@ -142,6 +149,9 @@ else
     (cd homepage && install_deps && npx vite build --base /)
     cp -r homepage/dist/. /out/
     cache_store homepage "$hash" homepage/dist
+    rm -rf homepage/node_modules homepage/dist
 fi
+
+du -sh /out
 
 ls -1 /out
