@@ -13,7 +13,7 @@ const gui = new Pane({ title: 'Galaxy generator', expanded: false })
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
-const particleTexture = textureLoader.load('/5.png')
+const particleTexture = textureLoader.load('/textures/5.png')
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
