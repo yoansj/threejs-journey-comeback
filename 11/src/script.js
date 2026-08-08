@@ -4,6 +4,7 @@ import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import GUI from 'lil-gui'
 
 const gui = new GUI()
+gui.close()
 const debugObject = {}
 
 /**

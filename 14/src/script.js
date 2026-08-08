@@ -7,7 +7,7 @@ import { Pane } from 'tweakpane'
  * Base
  */
 // Debug
-const gui = new Pane({ title: 'Lights debug menu', })
+const gui = new Pane({ title: 'Lights debug menu', expanded: false })
 const debugObject = {
     ambientLightColor: '#ffffff',
     directionalLightColor: '0x00fffc',

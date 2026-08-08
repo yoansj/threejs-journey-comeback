@@ -7,6 +7,7 @@ import GUI from 'lil-gui'
  */
 // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')

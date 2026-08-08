@@ -8,6 +8,7 @@ import { lerp } from 'three/src/math/MathUtils.js'
  */
 // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')

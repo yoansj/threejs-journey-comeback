@@ -11,7 +11,7 @@ import { gsap } from "gsap";
  * Base
  */
 // Debug
-const pane = new Pane({ title: 'Debug window' });
+const pane = new Pane({ title: 'Debug window', expanded: false });
 const debugObject = {
     matcap: 2,
     text: '// STUDIO [1N]',
