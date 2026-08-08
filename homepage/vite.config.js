@@ -40,6 +40,14 @@ function devLessonsList()
                 res.end(JSON.stringify(lessons, null, 2))
             })
 
+            // In production /build.json is stamped into the image once the
+            // lessons are built. In dev "now" is as true as it gets.
+            server.middlewares.use('/build.json', (req, res) =>
+            {
+                res.setHeader('Content-Type', 'application/json')
+                res.end(JSON.stringify({ builtAt: new Date().toISOString() }))
+            })
+
             // Serve the lesson thumbnails straight from the lesson folders.
             server.middlewares.use((req, res, next) =>
             {

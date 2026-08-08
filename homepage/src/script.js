@@ -1,4 +1,5 @@
 const grid = document.querySelector('#grid')
+const lastUpdated = document.querySelector('#lastUpdated')
 
 /**
  * Lessons
@@ -93,6 +94,30 @@ function createFallback(lesson)
 }
 
 /**
+ * Last updated
+ */
+// Stamped into the image right after the lessons are built (see the Dockerfile),
+// faked by the dev server. Missing or unreadable, the line just stays hidden.
+async function loadBuildDate()
+{
+    const response = await fetch('./build.json', { cache: 'no-cache' }).catch(() => null)
+    if (!response || !response.ok) return
+
+    const { builtAt } = await response.json().catch(() => ({}))
+    const date = new Date(builtAt)
+    if (Number.isNaN(date.getTime())) return
+
+    lastUpdated.textContent = `Last updated ${formatDate(date)}`
+    lastUpdated.title = date.toString()
+    lastUpdated.hidden = false
+}
+
+function formatDate(date)
+{
+    return date.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })
+}
+
+/**
  * Preview
  */
 function startPreview(card, preview, lesson)
@@ -124,3 +149,4 @@ function stopPreview(card, lesson)
 }
 
 loadLessons()
+loadBuildDate()

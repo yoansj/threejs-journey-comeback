@@ -20,5 +20,7 @@ folder, so it never shows up in its own listing.
 - `npm install && npm run dev` inside `homepage/` to work on it. In dev the lesson list is scanned straight
   from the repository, so the cards are all there but the iframes stay empty (nothing has been built).
 - Card title = first `# heading` of the lesson `NOTES.md`, minus its leading number.
+- The "Last updated" line under the description reads `/build.json`, stamped into the image by the
+  `Dockerfile` once the lessons are built. In dev the date is simply "now".
 - Card thumbnail = optional `thumbnail.png` (or `.jpg`, `.webp`, `.avif`, `.gif`) at the root of the lesson
   folder. Without one the card just shows the lesson number.

@@ -12,3 +12,9 @@ might be more relevant to do this
 
 if i have time later on when I finish the course this might be a lesson I come back
 to to make something greater
+
+things to explore:
+- add more content to the html
+- animate other properties
+- animate the particles ?
+- add more tweaks

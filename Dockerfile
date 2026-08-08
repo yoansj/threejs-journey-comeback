@@ -20,6 +20,12 @@ RUN --mount=type=cache,target=/root/.npm \
     --mount=type=cache,target=/lesson-cache \
     EXCLUDE_DIRS="$EXCLUDE_DIRS" sh docker/build-lessons.sh
 
+# The "last updated" the homepage shows. Its own layer on purpose: written here
+# it stays honest even when build-lessons.sh restored the homepage from the
+# lesson cache, and it does not change the hash of that script (which would
+# invalidate every cached lesson build).
+RUN date -u +'{"builtAt":"%Y-%m-%dT%H:%M:%SZ"}' > /out/build.json
+
 # ---- Serve them all from a single nginx ----
 FROM nginx:1.27-alpine
 
