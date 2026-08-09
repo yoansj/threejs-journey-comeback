@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cannon": "^0.6.2",
     "gsap": "^3.15.0"
   }
 }
