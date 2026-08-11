@@ -34,3 +34,20 @@ silly but i wanna do it
 anyways we're using cannon.js for this lesson
 
 in cannon Body is a physical object that needs a Shape, the primitives are kinda like the threejs ones
+
+once we added a ball and a plane we can add a physics material kinda like game engines so there's friction
+or bounces
+we need to create a contact material, i guess a material that indicates what happens when two materials get in contact ?
+
+// sphereBody.applyForce -> applies a force from a point in the world like wind or example
+// sphereBody.applyImpulse -> instead of adding to the force, adds to the velocity
+// sphereBody.applyLocalForce -> same as applyForce but local to the body coordinates
+// sphereBody.applyLocalImpuse -> same as aaply impulse but local to the body
+
+we can optimize the broadphase (the collision testing) algorithm
+there are 3 algorithms available
+- NaiveBroadphase: Tests every Bodies against every other Bodies (default)
+- GridBroadphase: Quadrilles the world and only tests Bodies against other Bodies in the same grid box or the neighbors' grid boxes.
+- SAPBroadphase (Sweep and prune broadphase): Tests Bodies on arbitrary axes during multiples steps.
+
+last one is more optimized but can generate bugs for fast moving objects
