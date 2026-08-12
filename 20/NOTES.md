@@ -1,4 +1,4 @@
-# 20 - (wip) Physics
+# 20 - Physics
 
 This is gonna be a reaaaally funny lesson I can already feel it
 I'll probably spend a bunch of time cooking some stuff up lol
@@ -51,3 +51,10 @@ there are 3 algorithms available
 - SAPBroadphase (Sweep and prune broadphase): Tests Bodies on arbitrary axes during multiples steps.
 
 last one is more optimized but can generate bugs for fast moving objects
+
+we can and should optimize the physics, using workers is a great idea for that
+(i tried on mobile and yeah it was pretty messy)
+
+cannon-es seems to be a better alternative but at the time of writing this it doesn't seem maintained too
+we can also use ammo.js which is more popular
+physijs seems ton ease the creation of physical objects but i'm not sure i'll use it
