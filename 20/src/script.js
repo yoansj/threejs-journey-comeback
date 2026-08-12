@@ -7,6 +7,7 @@ import CANNON from 'cannon'
  * Debug
  */
 const gui = new GUI()
+gui.close()
 const debugObject = {
     gravity: {x: 0, y: 0, z: 0}
 }
