@@ -24,3 +24,7 @@ folder, so it never shows up in its own listing.
   `Dockerfile` once the lessons are built. In dev the date is simply "now".
 - Card thumbnail = optional `thumbnail.png` (or `.jpg`, `.webp`, `.avif`, `.gif`) at the root of the lesson
   folder. Without one the card just shows the lesson number.
+
+## Claude disclaimer
+
+Claude is used to help me with building scripting and deployment stuff, not to do the lessons
