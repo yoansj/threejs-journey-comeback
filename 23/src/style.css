@@ -1,0 +1,29 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    overflow: hidden;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+.burgers {
+    bottom: 6px;
+    position: absolute;
+    color: white;
+    z-index: 1;
+    left: 50%;
+    font-size: 250%;
+    transform: translateX(-50%);
+}
