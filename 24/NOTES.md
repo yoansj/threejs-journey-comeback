@@ -1,4 +1,4 @@
-# 24 - Environment map (wip)
+# 24 - Environment map
 
 This lesson seems to have been updated since last time, I remember it's not too complicated but anyways let's go
 
@@ -56,3 +56,43 @@ hdris are better but heavier and take time to load
 -----
 
 now we generate an env map using blender yay
+
+the technique is very cool and allows us to have studio lightning for a really low effort
+i'll remember it for later if I do some kind of showcase of a product or something
+it's really cool !
+
+the nvidia tool is great too, having access to such a tool for free is nice
+textures coming out from this tool are exported as .exr
+we need a different loader to actually load them
+
+```import { EXRLoader } from 'three/addons/loaders/EXRLoader.js'```
+
+the result is pretty impressive even though it still lacks some key features
+
+the next tool is an ai tool online but strangely they don't let you download generated stuff anymore, you can go all the
+way, use their machines, type your prompt and generate your stuff but at the download step it asks you
+to subscribe to a paid membership loool
+
+-----
+
+we can use ground projected skyboxes to prevent the object from looking like they're flying
+
+i was lazy to i just put it when we select hdri-street
+we just instantiate a GroundedSkybox object instead of setting the background and add it to the scene
+we can edit it's position and radius to tweak the look, it's a flat sphere
+
+-----
+
+realtime env
+
+basically we create a cube texture and a cube camera
+we put a white-ish object that we move or not and render the camera inside the texture
+then we can assign the texture to the environment
+
+creates a really great realtime look
+
+there is a bug that makes it that the helmet and the torus block the light
+we can use layers to prevent that
+
+this technique is great but heavy on the performance
+we should use the smallest resolution on the WebGLCubeRenderTarget
