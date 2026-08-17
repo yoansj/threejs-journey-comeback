@@ -98,8 +98,30 @@ for dir in [0-9][0-9]*; do
     # plain strings such as textureLoader.load('/textures/foo.png'). Those stay
     # absolute and would 404 under /NN/, so make them document-relative here.
     # Only touched inside the image; the repository keeps its original paths.
-    find "$dir/src" -name '*.js' -type f -exec \
-        sed -i -E "s#(['\"\`])/(textures|fonts|models|sounds|images|draco|audio)/#\1./\2/#g" {} +
+    #
+    # The names to rewrite come from what the lesson actually publishes at the
+    # root of its static/ folder, so a lesson that adds a new asset folder does
+    # not need this script edited (a hardcoded list silently 404s instead).
+    for entry in "$dir"/static/*; do
+        [ -e "$entry" ] || continue
+
+        name=$(basename "$entry")
+        # Escaped for the sed regex / replacement, and for the # delimiter.
+        re=$(printf '%s' "$name" | sed -E 's#[][\\.^$*+?(){}|/#-]#\\&#g')
+        rep=$(printf '%s' "$name" | sed -E 's#[\\&/#]#\\&#g')
+
+        # Folders match "/name/", loose files match "/name" up to the quote.
+        if [ -d "$entry" ]; then
+            pattern="(['\"\`])/$re/"
+            replacement="\\1./$rep/"
+        else
+            pattern="(['\"\`])/$re(['\"\`])"
+            replacement="\\1./$rep\\2"
+        fi
+
+        find "$dir/src" -name '*.js' -type f -exec \
+            sed -i -E "s#$pattern#$replacement#g" {} +
+    done
 
     # npm ci needs a lockfile and hard-fails without one, which would take the
     # whole deployment down over a lesson that was committed without it.
