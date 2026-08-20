@@ -1,4 +1,4 @@
-# 25 - Realistic render (wip)
+# 25 - Realistic render
 
 I'm skipping the next lesson cause:
 - 1 it's not necessary for the certificate which i'm also trying to get while redoing the course / doing lessons I haven't done
