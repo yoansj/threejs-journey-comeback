@@ -5,6 +5,9 @@ import GUI from 'lil-gui'
 import testVertexShader from './shaders/test/vertex.glsl'
 import testFragmentShader from './shaders/test/fragment.glsl'
 
+import stylishVertexShader from './shaders/stylish/vertex.glsl'
+import stylishFragmentShader from './shaders/stylish/fragment.glsl'
+
 /**
  * Base
  */
@@ -30,15 +33,6 @@ const flagTexture = textureLoader.load('/textures/flag-french.jpg')
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32)
 
-const count = geometry.attributes.position.count
-const randoms = new Float32Array(count)
-
-for(let i = 0; i < count; i++)
-{
-    randoms[i] = Math.random()
-}
-
-geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1))
 
 // Material
 const material = new THREE.ShaderMaterial({
@@ -64,6 +58,31 @@ const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
 mesh.scale.y = 2 / 3
+
+const count = geometry.attributes.position.count
+const randoms = new Float32Array(count)
+
+for(let i = 0; i < count; i++)
+{
+    randoms[i] = Math.random()
+}
+
+geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1))
+
+const planeSecond = new THREE.Mesh(
+    geometry,
+    new THREE.ShaderMaterial({
+        vertexShader: stylishVertexShader,
+        fragmentShader: stylishFragmentShader,
+        uniforms: {
+            uTime: { value: 0 },
+        }
+    })
+)
+
+planeSecond.position.y += 1
+
+scene.add(planeSecond)
 
 /**
  * Sizes
@@ -119,6 +138,7 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
     material.uniforms.uTime.value = elapsedTime
+    planeSecond.material.uniforms.uTime.value = elapsedTime
 
     // Update controls
     controls.update()

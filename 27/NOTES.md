@@ -1,4 +1,4 @@
-# 27 - Shaders (wip)
+# 27 - Shaders
 
 It's timeeee
 

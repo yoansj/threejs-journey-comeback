@@ -18,6 +18,7 @@ void main()
     // gl_FragColor = vec4(uColor, 1.);
 
     vec4 textureColor = texture2D(uFlagTexture, vUv);
+    // vec3 color = vec3(0, 0, 1)
     textureColor.rgb *= vElevation * 2. + .5;
     gl_FragColor = textureColor;
 }
