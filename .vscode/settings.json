@@ -1,6 +1,22 @@
 {
-    "glsllint.additionalStageAssociations": {
-        "vertex": "vert",
-        "fragment": "frag"
-    }
+    // The declarations three.js prepends to every ShaderMaterial shader (see
+    // prefixVertex / prefixFragment in WebGLProgram.js). Injection is global
+    // and NOT stage-aware. Turn this off if a project's shaders declare these
+    // themselves (RawShaderMaterial, plain WebGL), or they'll report as
+    // duplicate declarations.
+    "webgl-glsl-editor.codeInjection": true,
+    "webgl-glsl-editor.codeInjectionSource": [
+        "precision highp float;",
+        "precision highp int;",
+        "uniform mat4 modelMatrix;",
+        "uniform mat4 modelViewMatrix;",
+        "uniform mat4 projectionMatrix;",
+        "uniform mat4 viewMatrix;",
+        "uniform mat3 normalMatrix;",
+        "uniform vec3 cameraPosition;",
+        "uniform bool isOrthographic;",
+        "attribute vec3 position;",
+        "attribute vec3 normal;",
+        "attribute vec2 uv;"
+    ]
 }

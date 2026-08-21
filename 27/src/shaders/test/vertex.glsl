@@ -1,12 +1,26 @@
 // Same value for every vertex so uniform
-uniform mat4 projectionMatrix; // transform coordinates into clip space coordinates
-uniform mat4 viewMatrix; // camera transformations, rotate camera right = matrices on the left approach camera = zoom matrices, rotate up = matrices down
-uniform mat4 modelMatrix; // mesh transformations, scale, rotate, move etc, applied to position
+// uniform mat4 projectionMatrix; // transform coordinates into clip space coordinates
+// uniform mat4 viewMatrix; // camera transformations, rotate camera right = matrices on the left approach camera = zoom matrices, rotate up = matrices down
+// uniform mat4 modelMatrix; // mesh transformations, scale, rotate, move etc, applied to position
+
+uniform vec2 uFrequency;
+uniform float uTime;
 
 // Get vertex position
 // This is applied to every vertices
 // It changes between vertices, it contains x,y,z pos for a vertex
-attribute vec3 position;
+// attribute vec3 position;
+
+// Random pos attribute
+attribute float aRandom;
+
+// Uv coordinates attribute
+// attribute vec2 uv;
+varying vec2 vUv;
+varying float vElevation;
+
+// Varying sent to the fragment shader
+// varying float vRandom;
 
 float foo = 0.2;
 vec2 toto = vec2(1, 5);
@@ -24,11 +38,21 @@ void main()
 
     // More explicit version
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-    modelPosition.z += sin(modelPosition.x * 10.) * .1;
+
+    float elevation = sin(modelPosition.x * uFrequency.x - uTime) * 0.1; // Flag anim
+    elevation += sin(modelPosition.y * uFrequency.y - uTime) * 0.1;
+
+    modelPosition.z += elevation;
+
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
 
     gl_Position = projectedPosition;
+
+    vUv = uv;
+    vElevation = elevation;
+
+    // vRandom = aRandom;
 
     // Shorter version
     // modelViewMatrix = viewMatrix * modelMatrix

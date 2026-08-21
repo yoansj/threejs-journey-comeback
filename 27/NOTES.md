@@ -90,4 +90,64 @@ https://learnopengl.com/Getting-started/Coordinate-Systems
 
 good read about matrices and coordinates
 
-to apply a matrice we just multiply
+to apply a matrice we just multiply it
+
+## Memo
+
+I struggled before to understand which shader does wat but it's obvious from the name
+vertex for vertices
+fragment for color
+
+# Fragment shader
+
+we can precise the float precision
+- highp impacts performance and doesn't work everywhere
+- mediump is the ordinary use
+-lowp can create bugs with the lack of precision
+
+we can create attributes by using setAttributes on the geometry
+
+geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1))
+
+second param is how many values compose one attribute
+
+right now it's 1 cause we just give 1 random value to each vertex
+if we were to give a position (x,y,z) it would have been 3
+and the randoms array would have been count * 3 at init
+
+if we want to send data from the vertex to the fragment
+we declare a varying inside the vertex
+
+varying float vRandom;
+
+update it, and then redeclare it in the fragment and just use it, straightforward
+
+values between vertices are interpolated with varying which might explain
+why it's making a beautiful gradient of color
+
+# Uniforms
+
+Used to send js data to the shader
+It doesn't vary between vertex and fragments
+Threejs creates some default uniforms but we can create more on the material
+
+uniforms: {
+    uFrequency: { value: new THREE.Vector2(10, 5) }
+}
+
+we can even send the clock elapsed time to animate it
+we have to be careful to not send values too big or too low too
+
+to apply a texture we can put it as a uniform
+we also need the uv coordinates to use it
+plane geometry already gives them to us as attributes
+
+that's it for the shaders
+i wanna practice a bit more so i'll create multiple shaders for this lesson
+it was cool i feel like i'm grasping the subject way more than before
+
+more ressources
+
+The Book of Shaders: https://thebookofshaders.com/
+ShaderToy: https://www.shadertoy.com/
+The Art of Code Youtube Channel: https://www.youtube.com/channel/UCcAlTqd9zID6aNX3TzwxJXg
