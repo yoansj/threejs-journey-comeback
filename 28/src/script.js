@@ -50,7 +50,14 @@ function createPlaneForPattern(materialParams) {
     scene.add(mesh)
     meshes.push(mesh)
 
-    mesh.position.x = patterns + (0.25 * patterns)
+    const COLUMNS = 5
+    const SPACING = 1.25
+
+    const column = patterns % COLUMNS
+    const row = Math.floor(patterns / COLUMNS) 
+
+    mesh.position.x = column * SPACING
+    mesh.position.y = -row * SPACING 
 
     patterns += 1;
 }
@@ -71,6 +78,60 @@ createPlaneForPattern({
 createPlaneForPattern({
     vertexShader: patternShaders['pattern-3'].vertex,
     fragmentShader: patternShaders['pattern-3'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-4'].vertex,
+    fragmentShader: patternShaders['pattern-4'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-5'].vertex,
+    fragmentShader: patternShaders['pattern-5'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-6'].vertex,
+    fragmentShader: patternShaders['pattern-6'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-7'].vertex,
+    fragmentShader: patternShaders['pattern-7'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-8'].vertex,
+    fragmentShader: patternShaders['pattern-8'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-9'].vertex,
+    fragmentShader: patternShaders['pattern-9'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-10'].vertex,
+    fragmentShader: patternShaders['pattern-10'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-11'].vertex,
+    fragmentShader: patternShaders['pattern-11'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-12'].vertex,
+    fragmentShader: patternShaders['pattern-12'].fragment,
     side: THREE.DoubleSide
 })
 
@@ -102,12 +163,16 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(0.25, - 0.25, 1)
+camera.position.set(1.25 * 2, - 2, 4)
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+controls.enableRotate = false
+controls.enablePan = false
+
+controls.target = new THREE.Vector3(1.25 * 2, - 2,1)
 
 /**
  * Renderer
