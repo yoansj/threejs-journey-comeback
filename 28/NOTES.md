@@ -81,3 +81,50 @@ we combine the two steps, the shapes then collide
 
 float strength = step(0.8, mod(vUv.x * 10.0, 1.0));
 strength += step(0.8, mod(vUv.y * 10.0, 1.0));
+
+## p12
+
+we multiply instead of adding
+
+  float strength = step(0.8, mod(vUv.x * 10.0, 1.0));
+  strength *= step(0.8, mod(vUv.y * 10.0, 1.0));
+
+## p13
+
+we want the dots to be larger on the x axis
+for that we lower the step
+
+float strength = step(0.2, mod(vUv.x * 10.0, 1.0));
+
+figured it out on my own whooo
+
+## p14
+
+we combine the previous patterns
+tbh i don't exactly get it
+
+float barX = step(0.4, mod(vUv.x * 10.0, 1.0)) * step(0.8, mod(vUv.y * 10.0, 1.0));
+float barY = step(0.8, mod(vUv.x * 10.0, 1.0)) * step(0.4, mod(vUv.y * 10.0, 1.0));
+float strength = barX + barY;
+
+## p15
+
+same as before but with an offset on the x and y axis
+
+    float barX = step(0.4, mod(vUv.x * 10.0 - 0.2, 1.0)) * step(0.8, mod(vUv.y * 10.0, 1.0));
+    float barY = step(0.8, mod(vUv.x * 10.0, 1.0)) * step(0.4, mod(vUv.y * 10.0 - 0.2, 1.0));
+
+## p16
+
+for that one the logic is to
+make the uv value go from 0.5 to 0 then to 0.5 again
+
+we can make the value - 0.5 and then use abs so it's always positive
+
+float strength = abs(vUv.x - 0.5);
+
+## p17
+
+i tried but coul'nt figure it out
+it's a combination from the other pattern with y
+but instead of just adding we use a min()

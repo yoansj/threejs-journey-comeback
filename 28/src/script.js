@@ -135,6 +135,42 @@ createPlaneForPattern({
     side: THREE.DoubleSide
 })
 
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-13'].vertex,
+    fragmentShader: patternShaders['pattern-13'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-14'].vertex,
+    fragmentShader: patternShaders['pattern-14'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-15'].vertex,
+    fragmentShader: patternShaders['pattern-15'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-16'].vertex,
+    fragmentShader: patternShaders['pattern-16'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-17'].vertex,
+    fragmentShader: patternShaders['pattern-17'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-18'].vertex,
+    fragmentShader: patternShaders['pattern-18'].fragment,
+    side: THREE.DoubleSide
+})
+
 /**
  * Sizes
  */
@@ -163,14 +199,13 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(1.25 * 2, - 2, 4)
+camera.position.set(1.25 * 2, - 2, 6)
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 controls.enableRotate = false
-controls.enablePan = false
 
 controls.target = new THREE.Vector3(1.25 * 2, - 2,1)
 
