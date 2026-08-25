@@ -149,3 +149,50 @@ we create one square
 then create a smaller one inverted
 
 # p21
+
+we multiply the uv x by 10, floor it and then divide it by 10
+
+## p22
+
+i haven't exactly figured it out but got close
+i managed to subtract to the strength the same formula using the y
+uv, then i make it not too bright by multiplying
+
+it's a simmilar but not exact replica, my gradient is kinda reversed
+
+    float strength = floor(vUv.x * 10.) / 10.;
+    strength -= (floor(vUv.y * 10.) / 10.) * .3;
+
+lol solution was just to multiply them i was close
+multiply = combine
+
+    float strength = floor(vUv.x * 10.) / 10.;
+    strength *= floor(vUv.y * 10.) / 10.;
+
+## p23
+
+we need to make a noise texture but tbh i have no idea so i'll look at the solution lol
+i knew it was about some kind of random stuff and checked all the functions but there doesn't seem to be a random
+
+there's a pseudo random function
+The Book of Shaders: https://thebookofshaders.com/10/
+
+pretty straightforward after, just give the uv coordinates and we get a float
+
+## p24
+
+so it's a noise but with blocks, i was trying before i'm sure i can figure it out
+
+okay figured it out, we make pixels bigger by multiplying the vector coordinates by 10
+i think my code is bad but it works
+
+    vec2 uv = vec2(floor(vUv.x * 10.) / 10., floor(vUv.y * 10.) / 10.);
+    float strength = random(uv);
+
+nah after checking the solution the code is neat, figured it out !!!
+
+## p25
+
+tbh i didn't try a lot, so to get the tilt effect we simply add the x uv to the y value and then change the intensity with a multiplier
+
+    vec2 uv = vec2(floor(vUv.x * 10.) / 10., floor((vUv.y + vUv.x * .5) * 10.) / 10.);
