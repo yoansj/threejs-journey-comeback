@@ -128,3 +128,24 @@ float strength = abs(vUv.x - 0.5);
 i tried but coul'nt figure it out
 it's a combination from the other pattern with y
 but instead of just adding we use a min()
+
+## p18
+
+same as before but with max
+
+## p19
+
+figured it out !
+it's a step before the max
+step returns either 0 or 1
+there's no gradient
+
+## p20
+
+thought i figured it out with just putting a bigger step
+but that's not it it's a reverse
+
+we create one square
+then create a smaller one inverted
+
+# p21

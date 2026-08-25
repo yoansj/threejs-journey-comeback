@@ -171,6 +171,24 @@ createPlaneForPattern({
     side: THREE.DoubleSide
 })
 
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-19'].vertex,
+    fragmentShader: patternShaders['pattern-19'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-20'].vertex,
+    fragmentShader: patternShaders['pattern-20'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-21'].vertex,
+    fragmentShader: patternShaders['pattern-21'].fragment,
+    side: THREE.DoubleSide
+})
+
 /**
  * Sizes
  */
