@@ -213,6 +213,35 @@ createPlaneForPattern({
     side: THREE.DoubleSide
 })
 
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-26'].vertex,
+    fragmentShader: patternShaders['pattern-26'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-27'].vertex,
+    fragmentShader: patternShaders['pattern-27'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-28'].vertex,
+    fragmentShader: patternShaders['pattern-28'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-29'].vertex,
+    fragmentShader: patternShaders['pattern-29'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-30'].vertex,
+    fragmentShader: patternShaders['pattern-30'].fragment,
+    side: THREE.DoubleSide
+})
 /**
  * Sizes
  */
@@ -241,7 +270,7 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(1.25 * 2, - 2, 6)
+camera.position.set(1.25 * 2, - 3, 6)
 scene.add(camera)
 
 // Controls
@@ -249,7 +278,7 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 controls.enableRotate = false
 
-controls.target = new THREE.Vector3(1.25 * 2, - 2,1)
+controls.target = new THREE.Vector3(1.25 * 2, - 3,1)
 
 /**
  * Renderer

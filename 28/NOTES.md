@@ -196,3 +196,42 @@ nah after checking the solution the code is neat, figured it out !!!
 tbh i didn't try a lot, so to get the tilt effect we simply add the x uv to the y value and then change the intensity with a multiplier
 
     vec2 uv = vec2(floor(vUv.x * 10.) / 10., floor((vUv.y + vUv.x * .5) * 10.) / 10.);
+
+
+## p26
+
+i think i managed to get it but not in the right corner
+i did 
+    float strength = 1. - (vUv.x * vUv.y); 
+
+the solution is much simpler it's just to use length
+
+the uvs start on the bottom left corner with a
+value equal to 0.0, 0.0
+the more we move from that corner the greater the length
+hence the gradient like visual
+
+## p27
+
+we can either offset the vUv and use length
+    float strength = length(vUv - .5);
+or we can use the distance between vUv and the center
+    float strength = distance(vUv, vec2(.5));
+
+## p28
+
+invert of previous one
+
+## p29
+
+i got a simmilar look by doing some sorcery, basically inverting and then multiplying but that's not it
+
+    float strength = 1. - length(vUv - .5) * 10.;
+
+it's pretty much a lens effect
+
+    float strength = 0.015 / (distance(vUv, vec2(0.5)));
+
+## p30
+
+same one but we squeeze the y
