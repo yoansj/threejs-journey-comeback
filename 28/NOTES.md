@@ -235,3 +235,92 @@ it's pretty much a lens effect
 ## p30
 
 same one but we squeeze the y
+
+## p31
+
+same formula but we have to multiply to add the same pattern
+using the x value this time
+it's not very intuitive but makes sense, i still struggle a bit
+
+## p32
+
+it's the same one but rotated, i have to remember how to rotate stuff though
+
+it was too complicated i give up lol
+
+the process is basically creating a rotate function
+it rotates a uv from a defined center
+
+we need PI for the rotation which doesn't exist so we have to write an approximation, we can use #define like in C to define a constant that's cheaper than an actual var
+
+## p33
+
+i figured this one on my own
+it's pretty much patten 19 but with the distance instead of using a negative offset on the uvs
+
+    float x = abs(distance(vUv, vec2(0.5)));
+
+we then use a step
+
+    float strength = step(0.3, max(x, y));
+
+the actual solution is simpler
+
+    float strength = step(0.5, distance(vUv, vec2(0.5)) + 0.25);
+
+it was harder to change the radius using my solution though
+
+## p34
+
+close to the previous one but we use abs with a negative offset
+
+    float strength = abs(distance(vUv, vec2(0.5)) - .25);
+
+## p35
+
+combination of the two previous ones, tbh i amost had it but yeah gave up
+
+## p36
+
+inverse of previous one #got it #simple
+
+## p37
+
+i'm pretty sure there's a sin stuff going on but i can't make it work
+
+vec2 wavedUv = vec2(
+    vUv.x,
+    vUv.y + sin(vUv.x * 30.0) * 0.1
+);
+
+turn the uvs into a wave and use the same formula as the two previous ones
+
+## p38
+
+also apply distortion on x, somehow it creates floating dots
+
+## p39
+
+same pattern with the uv multiplier bumped, trippy
+
+## p40
+
+it's just atan
+
+## p41
+
+negative offset on each axis inside the atan
+
+## p42
+
+same one but we "add the rest of it"
+
+## p43
+
+same one but we do a modulo on the angle, we multiply it to get the number of divisions
+
+## p44
+
+almost same one but using sin
+
+    float strength = sin(angle * 100.);
