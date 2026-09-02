@@ -1,4 +1,4 @@
-# 28 - Shader patterns (wip)
+# 28 - Shader patterns
 
 In sleep debt but i keep going
 
