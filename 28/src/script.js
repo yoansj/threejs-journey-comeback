@@ -325,6 +325,42 @@ createPlaneForPattern({
     fragmentShader: patternShaders['pattern-44'].fragment,
     side: THREE.DoubleSide
 })
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-45'].vertex,
+    fragmentShader: patternShaders['pattern-45'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-46'].vertex,
+    fragmentShader: patternShaders['pattern-46'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-47'].vertex,
+    fragmentShader: patternShaders['pattern-47'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-48'].vertex,
+    fragmentShader: patternShaders['pattern-48'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-49'].vertex,
+    fragmentShader: patternShaders['pattern-49'].fragment,
+    side: THREE.DoubleSide
+})
+
+createPlaneForPattern({
+    vertexShader: patternShaders['pattern-50'].vertex,
+    fragmentShader: patternShaders['pattern-50'].fragment,
+    side: THREE.DoubleSide
+})
 /**
  * Sizes
  */

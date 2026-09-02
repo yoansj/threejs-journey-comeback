@@ -324,3 +324,42 @@ same one but we do a modulo on the angle, we multiply it to get the number of di
 almost same one but using sin
 
     float strength = sin(angle * 100.);
+
+## p45
+
+## p46
+
+uses a perlin noise, it's used for many things such as terrain, clouds, snow water etc
+there are a lot of algorithms
+https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+
+
+we then just use the function
+    float strength = cnoise(vUv * 10.);
+
+## p47
+
+figured this one, it's a step with a low edge with the previous pattern
+
+    float strength = step(0.1, cnoise(vUv * 10.));
+
+solution is actually 0.0 but both works, bruno said it's useful to create a cow lol
+
+## p48
+
+it's some kind of invert but i can't exactly crack it
+bruh i though of abs but didn't try it damn
+almost had it
+
+    float strength = 1. - abs(cnoise(vUv * 10.));
+
+## p49
+
+sin instead of abs with no inversion
+
+## p50
+
+sin and step i kinda figured it out
+
+okay lesson is over, i didn't figure all of them and need more practice but here i am
+i need to practice more anyways
