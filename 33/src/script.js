@@ -10,6 +10,7 @@ import holographicFragmentShader from './shaders/holographic/fragment.glsl'
  */
 // Debug
 const gui = new GUI()
+const debugObject = { hologramColor: '#ffff80'}
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -86,9 +87,20 @@ const material = new THREE.ShaderMaterial({
         uTime: new THREE.Uniform(0),
         uModelPos: new THREE.Uniform(true),
         uAnimationSpeed: new THREE.Uniform(0.02),
+        uColor: new THREE.Uniform(new THREE.Color(debugObject.hologramColor))
     },
     transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
 })
+
+gui.add(material.uniforms.uModelPos, 'value').name('Use model position')
+gui.add(material.uniforms.uAnimationSpeed, 'value').name('Stripes animation speed')
+gui.addColor(debugObject, 'hologramColor')
+    .onChange(() => {
+        material.uniforms.uColor.value.set(debugObject.hologramColor)
+    })
 
 /**
  * Objects
