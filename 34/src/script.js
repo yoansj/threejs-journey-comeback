@@ -141,7 +141,7 @@ const createFirework = (count, position, size, texture, radius, color) => {
         geometry.dispose()
     }
 
-    gsap.to(material.uniforms.uProgress, { ease: 'linear', value: 1, duration: 3, onComplete: destroy })
+    gsap.to(material.uniforms.uProgress, { ease: 'linear', value: 1, duration: 10, onComplete: destroy })
 }
 
 const createRandomFirework = () =>
